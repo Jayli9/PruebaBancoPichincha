@@ -1,0 +1,86 @@
+<h1 mat-dialog-title class="text-center">{{productoEditar?'Formulario Edición de Registro':'Formulario de Registro'}}
+</h1>
+<div mat-dialog-content>
+    <div class="card box-shadow-sm">
+        <div class="card-body">
+            <div class="row">
+                <form #myForm="ngForm">
+                    <div class="col-12 was-validated">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="id">ID</label>
+                                <input [disabled]="productoEditar" type="text" class="form-control"
+                                    [(ngModel)]="productoDTO.id" name="id" id="id" required #id="ngModel" minlength="3"
+                                    maxlength="10">
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">ID no válido!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Solo puedes ingresar al menos 10 caracteres.
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" class="form-control" [(ngModel)]="productoDTO.name" name="nombre"
+                                    id="nombre" required #id="ngModel" minlength="5" maxlength="100">
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Este campo es requerido!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="descripcion">Descripción</label>
+                                <input type="text" class="form-control" [(ngModel)]="productoDTO.description"
+                                    name="descripcion" id="descripcion" required #id="ngModel" minlength="10"
+                                    maxlength="200">
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Este campo es requerido!
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label for="logo">Logo</label>
+                                <input type="text" class="form-control" [(ngModel)]="productoDTO.logo" name="logo"
+                                    id="logo" required #id="ngModel">
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Este campo es requerido!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="fecLiberacion">Fecha de Liberación</label>
+                                <input type="date" class="form-control" min="{{fechaActual}}"
+                                    [(ngModel)]="productoDTO.date_release" (keydown)="prevenirEdicion($event)"
+                                    (change)="calcularRevision(productoDTO)" name="fecLiberacion" id="fecLiberacion"
+                                    required #id="ngModel">
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Este campo es requerido!
+                                </div>
+
+                            </div>
+                            <div class="col-6">
+                                <label for="fecRevision">Fecha Revisión</label>
+                                <input disabled type="date" class="form-control" [(ngModel)]="productoDTO.date_revision"
+                                    name="fecRevision" id="fecRevision" required #id="ngModel">
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Este campo es requerido!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div mat-dialog-actions class="d-flex justify-content-center">
+                        <button mat-button class="claseBotonReiniciar" [mat-dialog-close]
+                            cdkFocusInitial>Reiniciar</button>
+                        <button *ngIf="!productoEditar" mat-button [disabled]="!myForm.form.valid"
+                            class="claseBotonAgregar" disabled (click)="guardarProducto(productoDTO)">Enviar</button>
+                        <button *ngIf="productoEditar" mat-button [disabled]="!myForm.form.valid"
+                            class="claseBotonAgregar" disabled (click)="actualizarProducto(productoDTO)">Enviar</button>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
